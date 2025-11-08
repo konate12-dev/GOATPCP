@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PREDICTOR MINE ⭐️ TRUQUÉ 💣</title>
+<style>
+  body {
+    margin:0; background:#004a99;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color:#e0e9f7;
+    display:flex; justify-content:center; padding:20px; min-height:100vh; box-sizing:border-box;
+  }
+  #app {
+    background: #0077ff;
+    border-radius: 12px; max-width: 960px; width: 100%; padding: 20px;
+    box-shadow: 0 10px 30px rgba(10,30,60,0.3);
+    display:flex; flex-direction: column; align-items: center;
+    color: #fff;
+  }
+  h1 {
+    margin: 0 0 10px 0; font-weight: 900; font-size: 24px; text-align:center;
+  }
+  .promo-header {
+    font-weight: 700; color: #ffecb3; margin-bottom: 20px;
+    display: flex; justify-content: space-between; align-items: center; width: 100%;
+  }
+  .promo-header a {
+    color: #ffeb3b; font-weight: 700; text-decoration:none;
+  }
+  form {
+    display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; justify-content: center;
+    width: 100%;
+  }
+  label {
+    font-weight: 600; margin-bottom: 6px; display: block;
+    color: #fff;
+  }
+  input[type=text] {
+    padding: 10px; font-size: 16px; border-radius: 10px; border: 1px solid #a1c4ff;
+    width: 180px;
+    font-weight: 700;
+    background: #004a99;
+    color: #fff;
+  }
+  input[type=text]::placeholder {
+    color: #cbd6ff;
+  }
+  button {
+    background: #ffeb3b; color: #004a99; border: none; border-radius: 10px;
+    padding: 12px 20px; font-weight: 900; cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    user-select:none;
+  }
+  button:disabled {
+    background: #b9b93d;
+    cursor: not-allowed;
+  }
+  #grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 10px;
+    width: 100%;
+    max-width: 500px;
+    margin-bottom: 20px;
+  }
+  .cell {
+    background: #0055cc;
+    height: 64px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 24px;
+    position: relative;
+    user-select:none;
+  }
+  .cell.dim {
+    opacity: 0.25;
+  }
+  .star-anim {
+    position: absolute;
+    font-size: 24px;
+    animation: pop 0.5s cubic-bezier(0.2,0.9,0.3,1) forwards;
+    transform-origin: center;
+  }
+  @keyframes pop {
+    0% {transform: scale(0.2); opacity: 0;}
+    60% {transform: scale(1.2); opacity: 1;}
+    100% {transform: scale(1); opacity: 1;}
+  }
+  #predictBtn {
+    background: #ffd600;
+    color: #004a99;
+    font-weight: 900;
+    font-size: 18px;
+    padding: 12px 30px;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(255,214,0,0.8);
+    transition: transform 0.1s ease;
+  }
+  #predictBtn:active:not(:disabled) {
+    transform: scale(0.95);
+  }
+  #message, #timerMessage {
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #ffeb3b;
+    min-height: 24px;
+    text-align:center;
+  }
+  /* Bannière d'avertissement discrète */
+  #warningBanner {
+    background:#ffcc00; color:#333; padding:8px; text-align:center; font-weight:700; font-family:sans-serif;
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 10000;
+    user-select:none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+  }
+  #warningBanner button {
+    cursor:pointer;
+    background: none;
+    border: none;
+    font-weight: 900;
+    font-size: 18px;
+    line-height: 1;
+  }
+  /* Popup inscription */
+  #overlay {
+    position: fixed; inset: 0;
+    background: rgba(5,10,20,0.8);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    padding: 20px;
+  }
+  #modal {
+    background: #0077ff;
+    max-width: 480px;
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 12px 40px rgba(10,30,60,0.5);
+    padding: 20px;
+    text-align: center;
+    position: relative;
+    color: #fff;
+    font-weight: 700;
+  }
+  #modal img {
+    width: 100%;
+    border-radius: 12px;
+    margin-bottom: 20px;
+  }
+  #modal button, #modal a {
+    font-weight: 700;
+    font-size: 16px;
+    border-radius: 10px;
+    padding: 12px 25px;
+    border: none;
+    cursor: pointer;
+    margin: 0 8px;
+    display: inline-block;
+    user-select:none;
+  }
+  #modal button {
+    background: #ffeb3b;
+    color: #004a99;
+  }
+  #modal a {
+    background: #ffeb3b;
+    color: #004a99;
+    text-decoration: none;
+  }
+  #modal .close {
+    position: absolute;
+    top: 8px; right: 12px;
+    font-size: 22px;
+    font-weight: 900;
+    background: #ddd;
+    border-radius: 50%;
+    width: 32px; height: 32px;
+    line-height: 30px;
+    cursor: pointer;
+    user-select:none;
+  }
+  #infoTop {
+    margin-bottom: 16px;
+    font-weight: 700;
+    font-size: 18px;
+    color: #ffeb3b;
+  }
+  #bombInfo {
+    margin-top: 10px;
+    font-weight: 800;
+    color: #c62828;
+  }
+  a.link-inscription {
+    color: #004a99;
+    font-weight: 900;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+  <div id="warningBanner" role="alert" aria-live="polite">
+    ⚠️ Ce site est sensible. Utilisez-le avec prudence.
+    <button id="closeBanner" aria-label="Fermer avertissement">✖</button>
+  </div>
+
+  <div id="app" aria-live="polite">
+    <h1>PREDICTOR MINE ⭐️ TRUQUÉ 💣</h1>
+    <div class="promo-header">
+      <div>🎯 Code promo 1win : <strong>PCP5</strong> — 500% de bonus 💰</div>
+      <div><a href="https://1wlucb.life/?open=register&p=hney" target="_blank" rel="noopener noreferrer" tabindex="-1">Lien inscription</a></div>
+    </div>
+    <form id="form">
+      <div>
+        <label for="promoInput">Code promo</label>
+        <input id="promoInput" type="text" placeholder="PCP5" autocomplete="off" required aria-required="true" />
+      </div>
+      <div>
+        <label for="idInput">ID 1win (4 à 8 chiffres)</label>
+        <input id="idInput" type="text" pattern="\d{4,8}" placeholder="1234567" autocomplete="off" required aria-required="true" />
+      </div>
+      <div style="margin-top:12px;">
+        <button type="submit" id="verifyBtn">VÉRIFIER</button>
+      </div>
+    </form>
+    <div id="message" role="alert" aria-live="assertive"></div>
+    <div id="timerMessage" role="alert" aria-live="assertive"></div>
+
+    <div id="board" style="display:none; flex-direction: column; align-items:center; width:100%; max-width: 540px;">
+      <div id="infoTop">💣 3 bombes cachées</div>
+      <div id="grid" aria-label="Grille de prédiction"></div>
+      <button id="predictBtn" aria-live="polite" aria-disabled="false">PRÉDICTOR</button>
+      <div id="resultMessage" style="font-weight:bold; margin-top:15px; color:#ffeb3b; min-height: 24px;"></div>
+    </div>
+  </div>
+
+  <!-- Pop-up inscription -->
+  <div id="overlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalDesc">
+    <div id="modal">
+      <button class="close" id="closeModal" aria-label="Fermer la fenêtre">×</button>
+      <img src="https://supposed-copper-ycmbufd9mj.edgeone.app/IMG_5633.jpeg" alt="Image inscription" />
+      <div style="margin-bottom:15px; font-weight:bold;">Code promo : <span style="color:#ffeb3b;">PCP5</span> — 500% BONUS</div>
+      <div>
+        <button id="btnSubscribe" title="Cliquez pour ouvrir le lien d'inscription">Je m'inscris</button>
+        <button id="btnAlready" style="margin-left:12px;">Déjà inscrit</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+  const warningBanner = document.getElementById('warningBanner');
+  const closeBanner = document.getElementById('closeBanner');
+  const promoInput = document.getElementById('promoInput');
+  const idInput = document.getElementById('idInput');
+  const verifyBtn = document.getElementById('verifyBtn');
+  const message = document.getElementById('message');
+  const timerMessage = document.getElementById('timerMessage');
+  const board = document.getElementById('board');
+  const grid = document.getElementById('grid');
+  const predictBtn = document.getElementById('predictBtn');
+  const resultMessage = document.getElementById('resultMessage');
+  const overlay = document.getElementById('overlay');
+  const closeModal = document.getElementById('closeModal');
+  const btnAlready = document.getElementById('btnAlready');
+  const btnSubscribe = document.getElementById('btnSubscribe');
+
+  let verified = false;
+  let cooldown = false;
+  let cooldownTimer = null;
+  let countdown = 120; // secondes
+
+  // Fermeture bannière avertissement
+  closeBanner.addEventListener('click', () => {
+    warningBanner.style.display = 'none';
+  });
+
+  // Formulaire vérification
+  verifyBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    const promo = promoInput.value.trim().toUpperCase();
+    const id = idInput.value.trim();
+    if(promo !== 'PCP5'){
+      message.textContent = 'Le code promo doit être PCP5.';
+      return;
+    }
+    if(!/^\d{4,8}$/.test(id)){
+      message.textContent = 'L\'ID doit contenir entre 4 et 8 chiffres.';
+      return;
+    }
+    verified = true;
+    message.textContent = '';
+    createGrid();
+    board.style.display = 'flex';
+    overlay.style.display = 'flex'; // Affiche popup inscription au premier accès
+  });
+
+  // Fermeture popup inscription
+  closeModal.addEventListener('click', () => {
+    overlay.style.display = 'none';
+  });
+
+  btnAlready.addEventListener('click', () => {
+    overlay.style.display = 'none';
+  });
+
+  btnSubscribe.addEventListener('click', () => {
+    window.open('https://1wlucb.life/?open=register&p=hney', '_blank');
+  });
+
+  function createGrid(){
+    grid.innerHTML = '';
+    for(let i=0; i<25; i++){
+      const cell = document.createElement('div');
+      cell.className = 'cell';
+      cell.dataset.index = i;
+      grid.appendChild(cell);
+    }
+  }
+
+  function chooseStars(){
+    // 4 to 7 stars, weighted for 4,5,6,7 often
+    const weights = [
+      {val:4, w:32},
+      {val:5, w:32},
+      {val:6, w:22},
+      {val:7, w:14},
+    ];
+    let total = weights.reduce((a,b)=>a+b.w, 0);
+    let r = Math.random()*total;
+    for(const w of weights){
+      if(r < w.w) return w.val;
+      r -= w.w;
+    }
+    return 4;
+  }
+
+  function generatePrediction(){
+    const nStars = chooseStars();
+    const positions = [];
+    while(positions.length < nStars){
+      const pos = Math.floor(Math.random()*25);
+      if(!positions.includes(pos)) positions.push(pos);
+    }
+    positions.sort((a,b) => a-b);
+    return {nStars, positions};
+  }
+
+  function animateStars(prediction){
+    const cells = grid.children;
+    for(let i=0; i<cells.length; i++){
+      cells[i].innerHTML = '';
+      cells[i].classList.remove('dim');
+    }
+    prediction.positions.forEach((pos,i)=>{
+      const cell = cells[pos];
+      const star = document.createElement('div');
+      star.textContent = '⭐️';
+      star.className = 'star-anim';
+      star.style.animationDelay = (i*120) + 'ms';
+      star.style.fontSize = `${22 + i*4}px`;
+      cell.appendChild(star);
+    });
+    for(let i=0; i<cells.length; i++){
+      if(!prediction.positions.includes(i)){
+        cells[i].classList.add('dim');
+      }
+    }
+  }
+
+  function startCooldown(){
+    cooldown = true;
+    countdown = 120;
+    predictBtn.disabled = true;
+    predictBtn.setAttribute('aria-disabled', 'true');
+    timerMessage.textContent = `Attendez ${countdown} secondes avant la prochaine prédiction`;
+    cooldownTimer = setInterval(() => {
+      countdown--;
+      if(countdown <= 0){
+        clearInterval(cooldownTimer);
+        cooldown = false;
+        timerMessage.textContent = '';
+        predictBtn.disabled = false;
+        predictBtn.setAttribute('aria-disabled', 'false');
+      } else {
+        timerMessage.textContent = `Attendez ${countdown} secondes avant la prochaine prédiction`;
+      }
+    }, 1000);
+  }
+
+  predictBtn.addEventListener('click', () => {
+    if(!verified){
+      alert('Veuillez d\'abord entrer le code promo PCP5 et votre ID valide.');
+      return;
+    }
+    if(cooldown){
+      alert(`Veuillez patienter encore ${countdown} secondes avant une nouvelle prédiction.`);
+      return;
+    }
+    const pred = generatePrediction();
+    animateStars(pred);
+    resultMessage.textContent = 'Nouvelle prédiction';
+    startCooldown();
+  });
+</script>
+
+</body>
+</html>
